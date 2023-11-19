@@ -12,7 +12,9 @@ const uriDb = process.env.DB_URI;
 app.use(express.json());
 app.use(cors());
 app.use(passport.initialize());
+app.use(express.static('public'));
 
+const avatarRouter = require('./routes/api/avatar.upload.routes');
 const contactsRouter = require('./routes/api/contacts.routes');
 const usersRouter = require('./routes/api/users.current.routes');
 const registerRouter = require('./routes/api/register.routes');
@@ -24,7 +26,7 @@ app.use('/users', usersRouter);
 app.use('/users', registerRouter);
 app.use('/users', loginRouter);
 app.use('/users', logoutRouter);
-
+app.use('/users', avatarRouter); 
 
 app.use((req, res) => {
   res.status(404).json({
@@ -57,6 +59,5 @@ mongoose
     console.log(`Server not running. Error message: ${err.message}`);
     process.exit(1);
   });
-  
 
 module.exports = app;
